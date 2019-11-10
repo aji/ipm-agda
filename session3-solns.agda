@@ -22,32 +22,32 @@ module _ {A B C : Set} where
   p4 a = a ←or
 
   p5 : A ∨ B → B ∨ A
-  p5 (a ←or) = or→ a
-  p5 (or→ b) = b ←or
+  p5 (a ←or   ) =    or→ a
+  p5 (   or→ b) = b ←or
 
   p6 : A ∨ (B ∨ C) → (A ∨ B) ∨ C
-  p6 (a ←or) = (a ←or) ←or
-  p6 (or→ (b ←or)) = (or→ b) ←or
-  p6 (or→ (or→ c)) = or→ c
+  p6 (a ←or            ) = (a ←or   ) ←or
+  p6 (   or→ (b ←or   )) = (   or→ b) ←or
+  p6 (   or→ (   or→ c)) =             or→ c
 
   p7 : A ∧ B → A ∨ B
   p7 (a and _) = a ←or
 
   p8 : (A ∧ B) ∨ C → (A ∨ C) ∧ (B ∨ C)
-  p8 ((a and b) ←or) = (a ←or) and (b ←or)
-  p8 (or→ c) = (or→ c) and (or→ c)
+  p8 ((a and b) ←or   ) = (a ←or   ) and (b ←or   )
+  p8 (           or→ c) = (   or→ c) and (   or→ c)
 
   p9 : (A ∨ B) ∧ C → (A ∧ C) ∨ (B ∧ C)
-  p9 ((a ←or) and c) = (a and c) ←or
-  p9 ((or→ b) and c) = or→ (b and c)
+  p9 ((a ←or   ) and c) = (a and c) ←or
+  p9 ((   or→ b) and c) =            or→ (b and c)
 
   p10 : (A → C) ∧ (B → C) → ((A ∨ B) → C)
-  p10 (f and g) = λ{ (a ←or) → f a ;
-                     (or→ b) → g b }
+  p10 (f and g) = λ{ (a ←or   ) → f a ;
+                     (   or→ b) → g b }
 
   p11 : (A ∨ B → C) → (A → C) ∨ (B → C)
   p11 f = or→ λ b → f (or→ b)
 
   p12 : (A → B) ∨ (A → C) → (A → (B ∨ C))
-  p12 (f ←or) = λ a → f a ←or
-  p12 (or→ g) = λ a → or→ g a
+  p12 (f ←or   ) = λ a → f a ←or
+  p12 (   or→ g) = λ a →      or→ g a

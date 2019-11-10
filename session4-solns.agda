@@ -24,43 +24,43 @@ module _ {A B C : Set} where
   p3 a = or→ a
 
   p4 : ⊥ ∨ A → A
-  p4 (x ←or) = empty x
-  p4 (or→ a) = a
+  p4 (! ←or   ) = empty !
+  p4 (   or→ a) = a
 
   p5 : ⊥ ∧ A → ⊥
-  p5 (x and a) = x
+  p5 (! and a) = !
 
   p6 : (⊥ → A)
   p6 = p1
 
   p7 : (A → B) → ((B → ⊥) → (A → ⊥))
-  p7 a→b = λ b→⊥ → λ a → b→⊥ (a→b a)
+  p7 a→b = λ ¬b → λ a → ¬b (a→b a)
 
   p8 : ((A ∨ B) → ⊥) → (A → ⊥) ∧ (B → ⊥)
   p8 f = (λ a → f (a ←or)) and (λ b → f (or→ b))
 
   p9 : (A → ⊥) ∧ (B → ⊥) → (A ∨ B → ⊥)
-  p9 (f and g) = λ{ (a ←or) → f a ;
-                    (or→ b) → g b }
+  p9 (f and g) = λ{ (a ←or   ) → f a ;
+                    (   or→ b) → g b }
 
   p10 : (A → ⊥) ∨ (B → ⊥) → (A ∧ B → ⊥)
-  p10 (f ←or) = λ{ (a and _) → f a }
-  p10 (or→ g) = λ{ (_ and b) → g b }
+  p10 (¬a ←or    ) = λ{ (a and _) → ¬a a }
+  p10 (    or→ ¬b) = λ{ (_ and b) → ¬b b }
 
   p11 : (((A → ⊥) → ⊥) → ⊥) → A → ⊥
-  p11 f = λ a → f (λ a→⊥ → a→⊥ a)
+  p11 f = λ a → f (λ ¬a → ¬a a)
 
   p12 : (A → ⊥) ∨ B → (A → B)
-  p12 (a→⊥ ←or)  = λ a → empty (a→⊥ a)
-  p12 (or→ b)    = λ _ → b
+  p12 (¬a ←or   )  = λ a → empty (¬a a)
+  p12 (    or→ b)  = λ _ → b
 
   p13 : (A → ⊥) → (B → A) → (B → ⊥)
-  p13 a→⊥ f = λ b → a→⊥ (f b)
+  p13 ¬a f = λ b → ¬a (f b)
 
   p14 : ((A → ⊥) ∨ (B → ⊥)) ∨ (C → ⊥) → ((A ∧ B) ∧ C → ⊥)
-  p14 ((a→⊥ ←or) ←or)  = λ{ ((a and _) and _) → a→⊥ a }
-  p14 ((or→ b→⊥) ←or)  = λ{ ((_ and b) and _) → b→⊥ b }
-  p14 (or→ c→⊥)        = λ{ ((_ and _) and c) → c→⊥ c }
+  p14 ((¬a ←or    ) ←or    )  = λ{ ((a and _) and _) → ¬a a }
+  p14 ((    or→ ¬b) ←or    )  = λ{ ((_ and b) and _) → ¬b b }
+  p14 (              or→ ¬c)  = λ{ ((_ and _) and c) → ¬c c }
 
   p15 : (A ∨ (A → ⊥) → ⊥) → ⊥
   p15 = λ f → f (or→ λ a → f (a ←or))
