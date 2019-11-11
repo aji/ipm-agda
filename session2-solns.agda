@@ -45,6 +45,6 @@ module _ {A B C D : Set} where
   p13 (a→b and a→c) = λ a → (a→b a and a→c a)
 
   p14 : (A → (A → B)) → ((A → B) → A) → B
-  p14 f g = let h : A → B
-                h a = (f a) a
-            in h (g h)
+  p14 f g = h (g h)
+    where h : A → B
+          h a = (f a) a
